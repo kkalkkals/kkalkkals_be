@@ -1,6 +1,7 @@
 import express from "express";
 import postsRouter from './routes/pickupRoutes.js';
 import postRoutes from "./routes/postRoutes.js";
+import locationRoutes from "./routes/locationRoutes.js";
 
 const app = express();
 const PORT = 3000;
@@ -12,6 +13,8 @@ app.use("/posts", postRoutes);
 app.use("/uploads", express.static("uploads"));
 
 app.use('/api/posts', postsRouter);
+
+app.use('/api/locations', locationRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
