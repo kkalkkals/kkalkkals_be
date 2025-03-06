@@ -62,7 +62,7 @@ export const getActivePostsByBounds = async (swLat, neLat, swLng, neLng) => {
         const [posts] = await pool.query(`
             SELECT post_id, trash_type, trash_amount, address, latitude, longitude, request_term, status, money, date
             FROM post
-            WHERE status = 1
+            WHERE status = 0
             AND latitude BETWEEN ? AND ?
             AND longitude BETWEEN ? AND ?
             ORDER BY date DESC;
