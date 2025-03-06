@@ -3,7 +3,7 @@ import axios from "axios";
 
 export async function addPost(req, res) {
   const { trash_type, trash_amount, address, request_term, money } = req.body;
-  const image = req.file ? `${req.file.key}` : null;
+  const image = req.file.path;
 
   if (!trash_type || !trash_amount || !address || !money || !image) {
     return res.status(400).json({ message: "필수안보냄" });
