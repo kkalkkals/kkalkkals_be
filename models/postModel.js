@@ -4,6 +4,8 @@ export const insertPost = async ({
   trash_type,
   trash_amount,
   address,
+  latitude,
+  longitude,
   request_term,
   image,
   money,
