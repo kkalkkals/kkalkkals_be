@@ -38,11 +38,10 @@ export const getAllPosts = async (sort, limit, offset) => {
 };
 
 export const getActivePosts = async (sort, limit, offset) => {
-  try {
-    const order = sort === "old" ? "ASC" : "DESC";
-    const [posts] = await pool.query(
-      `
-            SELECT *
+    try {
+        const order = sort === 'old' ? 'ASC' : 'DESC';
+        const [posts] = await pool.query(`
+            SELECT post_id, trash_type, trash_amount, address, latitude, longitude, request_term, status, money, date
             FROM post
             WHERE status != 3
             ORDER BY date ${order}
@@ -51,8 +50,27 @@ export const getActivePosts = async (sort, limit, offset) => {
       [limit, offset]
     );
 
-    return posts;
-  } catch (error) {
-    console.error("model error");
-  }
+        return posts;
+
+    } catch (error) {
+        console.error("model error");
+    }
+}
+
+export const getActivePostsByBounds = async (swLat, neLat, swLng, neLng) => {
+    try {
+        const [posts] = await pool.query(`
+            SELECT post_id, trash_type, trash_amount, address, latitude, longitude, request_term, status, money, date
+            FROM post
+            WHERE status != 3
+            AND latitude BETWEEN ? AND ?
+            AND longitude BETWEEN ? AND ?
+            ORDER BY date DESC;
+        `, [swLat, neLat, swLng, neLng]);
+
+        return posts;
+    } catch (error) {
+        console.error("model error in getActivePostsByBounds:", error);
+        throw error;
+    }
 };
