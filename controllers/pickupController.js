@@ -1,4 +1,25 @@
-import { getActivePosts, getAllPosts } from "../models/pickupModel.js";
+import { getActivePosts, getAllPosts, updatePostStatus } from "../models/pickupModel.js";
+
+export const updatePostStatusController = async(req, res) => {
+    try{
+        const { postId } = req.params;
+
+        const result = await updatePostStatus(postId);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "게시글을 찾을 수 없습니다." });
+        }
+
+        res.status(200).json({
+            message: "배출대행 상태 업데이트 성공"
+        });
+
+
+    }catch(error){
+        console.error("배출대행 상태 업데이트 실패");
+        return res.status(500).json({ message: "서버 에러 발생"});
+    }
+}
 
 export const getAllPostsController = async(req, res) => {
     try{
