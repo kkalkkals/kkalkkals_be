@@ -1,4 +1,4 @@
-import { getActivePosts, getAllPosts, updatePostStatus } from "../models/pickupModel.js";
+import { getActivePosts, getAllPosts, updatePostStatus, getActivePostsByBounds } from "../models/pickupModel.js";
 
 export const updatePostStatusController = async(req, res) => {
     try{
@@ -57,3 +57,23 @@ export const getActivePostsController = async(req, res) => {
     }
 
 }
+
+export const getActivePostsByBoundsController = async (req, res) => {
+    try {
+        const { minLat, maxLat, minLng, maxLng } = req.query;
+
+        if (!minLat || !maxLat || !minLng || !maxLng) {
+            return res.status(400).json({ message: "잘못된 요청: 바운드 값 필요" });
+        }
+
+        const posts = await getActivePostsByBounds(parseFloat(minLat), parseFloat(maxLat), parseFloat(minLng), parseFloat(maxLng));
+
+        res.status(200).json({
+            message: "바운드 내 배출 대행 목록 가져오기 성공",
+            data: posts
+        });
+    } catch (error) {
+        console.error("바운드 내 배출 대행 목록 가져오기 실패:", error);
+        return res.status(500).json({ message: "서버 에러 발생" });
+    }
+};

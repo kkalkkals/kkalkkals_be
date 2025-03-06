@@ -9,15 +9,16 @@ export const insertPost = async ({
   money,
 }) => {
   const [result] = await pool.query(
-    "INSERT INTO post (trash_type,trash_amount,address,request_term,image,status,date,money) VALUES (?,?,?,?,?,?,?,?)",
+    "INSERT INTO post (trash_type, trash_amount, address, latitude, longitude, request_term, image, status, date, money) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       trash_type,
       trash_amount,
       address,
+      latitude,
+      longitude,
       request_term,
       image,
       0,
-      new Date(),
       money,
     ]
   );
