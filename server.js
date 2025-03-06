@@ -2,9 +2,12 @@ import express from "express";
 import postsRouter from './routes/pickupRoutes.js';
 import postRoutes from "./routes/postRoutes.js";
 import locationRoutes from "./routes/locationRoutes.js";
+import cors from "cors";
 
 const app = express();
-const PORT = 3000;
+const PORT = 80;
+
+app.use(cors());
 
 app.use(express.json());
 
