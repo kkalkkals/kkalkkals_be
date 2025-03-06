@@ -1,8 +1,7 @@
 import express from 'express';
-import { getActivePostsController, getAllPostsController } from '../controllers/pickupController.js';
+import { updatePostStatusController } from '../controllers/pickupController.js';
 const router = express.Router();
 
-router.get('/all', getAllPostsController);
-router.get('/active', getActivePostsController);
+router.patch('/status/:postId', updatePostStatusController);
 
 export default router;

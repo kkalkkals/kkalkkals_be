@@ -1,5 +1,5 @@
 import express from "express";
-import postsRouter from './routes/pickupRoutes.js';
+import pickupRoutes from './routes/pickupRoutes.js';
 import postRoutes from "./routes/postRoutes.js";
 import locationRoutes from "./routes/locationRoutes.js";
 import cors from "cors";
@@ -15,7 +15,7 @@ app.use("/posts", postRoutes);
 
 app.use("/uploads", express.static("uploads"));
 
-app.use('/api/posts', postsRouter);
+app.use('/api/pickup', pickupRoutes);
 
 app.use('/api/locations', locationRoutes);
 
