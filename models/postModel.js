@@ -19,6 +19,7 @@ export const insertPost = async ({
       request_term,
       image,
       0,
+      new Date(), // 현재 날짜와 시간을 추가
       money,
     ]
   );
