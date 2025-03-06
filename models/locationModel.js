@@ -34,14 +34,16 @@ export const getRecycleCenterLocations = async () => {
 export const getLocationsWithinBounds = async (minLat, maxLat, minLng, maxLng) => {
     try {
         const [locations] = await pool.query(`
-            SELECT id, address, latitude, longitude, operation_hours
-            FROM (
-                SELECT id, address, latitude, longitude, operation_hours FROM cleanhouse
-                UNION ALL
-                SELECT id, address, latitude, longitude, operation_hours FROM recycle_center
-            ) AS combined
+            SELECT id, address, latitude, longitude, operation_hours, 'cleanhouse' AS type
+            FROM cleanhouse
+            WHERE latitude BETWEEN ? AND ? AND longitude BETWEEN ? AND ?
+            
+            UNION ALL
+            
+            SELECT id, address, latitude, longitude, operation_hours, 'recycling' AS type
+            FROM recycle_center
             WHERE latitude BETWEEN ? AND ? AND longitude BETWEEN ? AND ?;
-        `, [minLat, maxLat, minLng, maxLng]);
+        `, [minLat, maxLat, minLng, maxLng, minLat, maxLat, minLng, maxLng]);
 
         return locations;
     } catch (error) {
