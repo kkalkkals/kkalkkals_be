@@ -28,3 +28,14 @@ export const insertPost = async ({
 
   return result.insertId;
 };
+
+export const selectDetailPost = async ({ post_id }) => {
+  const [rows] = await pool.query(
+    `SELECT *
+       FROM post
+       WHERE post_id = ?`,
+    [post_id]
+  );
+  console.log(post_id);
+  return rows[0];
+};
